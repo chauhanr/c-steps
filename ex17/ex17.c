@@ -59,7 +59,7 @@ struct Connection *database_open(const char *filename, char mode){
          }
      }
      if (!conn->file){
-	  die("Failed to open file"); 
+   die("Failed to open file"); 
       }
     return conn; 
 
