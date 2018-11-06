@@ -13,9 +13,7 @@ For almost everything else we need to use arrays.
 
 ## Stdio Functions 
 
-# stdio.h 
-
-## scanf 
+### scanf 
 scanf method will read the input from stdin which will match the format string and place in argument
 that follows. If the operation is successful then the number of characters captured is returned
 otherwise a negative number is returned. 
@@ -24,7 +22,7 @@ otherwise a negative number is returned.
    int scanf(const char *format, ...) 
 ```
 
-## fscanf
+### fscanf
 the operation is similar to scanf but the input to the fscanf can be defined by the user. The inputs
 could be a file or a stream. The return type is the same as scanf. if the input stream is mentioned
 as stdin then the fscanf is the same as scanf. 
@@ -37,7 +35,7 @@ as stdin then the fscanf is the same as scanf.
   fscanf(stdin, "%s", str); 
 ```
 
-## sscanf 
+### sscanf 
 This operation is form the scanf family and it taken input as the char array or string. rest of the
 functionality remains the same. 
 
@@ -45,7 +43,7 @@ functionality remains the same.
    int sscanf(const char *str, const char *format, ...) 
 ```
 
-## fgets 
+### fgets 
 this method reads from the specified stream and stores the line into a string pointed by the str. It
 stops when either n-1 characters are read, a newline char is encountered or end of file is reached
 which ever is reached first.  
@@ -109,6 +107,94 @@ this returns the reference to the new file name that has been craeted.
   fclose(fp); 
 ```
 
+### fclose 
+this method will close the file pointer that is passed to the method. all buffers of the file are flushed. 
+**return value** 
+return zero value if stream is successfully closed. and on failure an EOF is sent back. 
 
+```
+  int fclose(FILE * stream)
+```
+
+### fgetpos
+this method will get the current file position on the stream and store it on the pos varaible passed. 
+**return value** 
+return 0 on success and non zero number in case of failure. 
+
+```
+   int fgetpos(FILE * stream, fpos_t pos);
+   // example 
+   FILE fp * ; 
+   fpos_t position; 
+
+   fp = fopen("file.txt", "w+"); 
+   fgetpos(fp, &position); 
+   fputs("hello", fp); 
+   fsetpos(fp, &position); 
+   fputs("This will override hello.", fp); 
+   fclose(fp); 
+ 
+```
+
+### fseek
+This method will try to set the file position to the offset that is specified in the method. 
+
+```
+  int fseek(FILE * stream, long int offset, int whence) 
+```
+
+* stream - is the pointer to the FILE that identifies the stream. 
+* offset - specifies the number of bytes you intend to move from whence 
+* whence - this is the position from which the offset has to be applied. it can be any of the following: 
+	* SEET_SET - begining of the file. 
+	* SEEK_CUR - current position of the file pointer 
+	* SEEK_END - end of the file. 
+
+**return value** 
+this method returns a 0 in case of success and a non zero value in case of failure. 
+
+### ftell 
+A simple method that gives us the current position on the stream 
+
+```
+   long ftell(FILE * stream)
+```
+**return value** 
+this returns a offset value which is non negative value. if an error occurs, -1L is returned and global variable errno is also set to a positive value. 
+
+### rewind 
+This method will take the stream position to the starting of the file. 
+
+```
+  void rewind(FILE * stream); 
+  
+  // example 
+   fp = fopen("file.txt", "w+"); 
+   while(1){
+      ch = fgetc(fp);
+      if(feof(fp)){
+        break;
+      }
+      printf("%c", ch);
+   }
+
+   rewind(fp); 
+```
+
+## fprintf
+Set the formatted out to a stream. 
+
+```
+  int fprintf(FILE * stream, const char * format, ...); 
+```
+The string values passed as parameter is formatted and set to the stream.
+
+* format is specified as the following "%[flag][width][.precision][length]specifier"
+* the specifiers are defined as follows:
+	* c - character 
+	* d or i - signed decimal integer 
+	* e - scientific notion 
+	* E - scientific notion with E 
+	* f - float value.
 
 
