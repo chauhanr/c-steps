@@ -13,6 +13,69 @@ For almost everything else we need to use arrays.
 
 ## Stdio Functions 
 
+# stdio.h 
+
+## scanf 
+scanf method will read the input from stdin which will match the format string and place in argument
+that follows. If the operation is successful then the number of characters captured is returned
+otherwise a negative number is returned. 
+
+```
+   int scanf(const char *format, ...) 
+```
+
+## fscanf
+the operation is similar to scanf but the input to the fscanf can be defined by the user. The inputs
+could be a file or a stream. The return type is the same as scanf. if the input stream is mentioned
+as stdin then the fscanf is the same as scanf. 
+
+```
+  int fscanf(FILE *stream, const char *format, ...)
+
+  // example
+  char str[20]; 
+  fscanf(stdin, "%s", str); 
+```
+
+## sscanf 
+This operation is form the scanf family and it taken input as the char array or string. rest of the
+functionality remains the same. 
+
+```
+   int sscanf(const char *str, const char *format, ...) 
+```
+
+## fgets 
+this method reads from the specified stream and stores the line into a string pointed by the str. It
+stops when either n-1 characters are read, a newline char is encountered or end of file is reached
+which ever is reached first.  
+**return value** 
+the function returns the same value as captured in str. if the end of file is reached and no
+characters are read then the function returns a null pointer 
+
+
+```
+  char *fgets(char *str, int n, FILE *stream)
+  // exampel 
+  fp = fopen("file.txt", "r"); 
+  if (fp != NULL){
+     if(fgets(str, 60, fp){
+        printf("%s", str);
+     }else{
+       return -1
+     }
+  }else{
+     perror("Error reading file"); 
+  }
+  fclose(fp);
+```
+
+the **gets** method does the same thing that the fgets does but it copies from stdin
+```
+   char *gets(char *str) 
+
+```
+
 ### fopen 
 this method opens a file specified by the file path provided and in the mode mentioned. 
 **return value** 
