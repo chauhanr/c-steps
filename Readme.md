@@ -195,6 +195,46 @@ The string values passed as parameter is formatted and set to the stream.
 	* d or i - signed decimal integer 
 	* e - scientific notion 
 	* E - scientific notion with E 
-	* f - float value.
+	* f - decimal float value. 
+	* g - uses the shorter of e or f 
+	* G - uses the shorter of %E or %f
+	* o - octal signed. 
+	* x - unsigned hexa decimal 
+	* u - unsigned integer 
+	* s - string 
+**return value** 
+this returns a positive number which is the count of characters that the method prints or a negative number in case of failure. 
 
+### fwrite 
+This method writes data from the array pointed to by ptr to the give stream 
 
+```
+   size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream); 
+    
+   // example 
+   FILE *fp; 
+   char str[] = "This is example.com"; 
+   fp = fopen("file.txt", "w+");
+   fwrite(str, 1, sizeof(str), fp); 
+
+   fclose(fp); 
+```
+* ptr - pointer to the array element to be written 
+* size - this size of each element that needs to be written. 
+* nmemb - this is teh number of elements, each one being as long as size. 
+* stream - file to which we need to write. 
+
+**return value** 
+this gives the number of elements successfully written. if the number returned is less than nmemb then there has been an error. 
+
+### fread 
+This method is the same as the fwrite except that it read insteads of writes 
+
+```
+ size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream) 
+```
+
+* ptr is a pointer to a memory block of size  (size * nmemb) bytes. 
+* size - size in bytes of each element we are trying to read. 
+* nmemb - number elements that are present in the stream, each of which is of size (size type)
+* stream - the pointers to FILE object that specifies the input Stream
