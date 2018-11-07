@@ -4,12 +4,12 @@ This file will document all the important features of the makefile that is gener
 
 ## CFLAGS 
 CFLAGS are arguments the you intend to pass to the c compiler. 
-	* -g flag tells the compiler to generate debugging information 
-	* -O2 another optimization that the compiler needs to do with right level of logging to make builds fast. 
-	* -Wall indicates that all warnings need to be shown 
-	* -I specifies the source folder for teh code. 
-	* -D sets a variable that can be used in a MACRO therefore NDEBUG is set for the dbg.h marco file. 
-	* the $(OPTFLAGS) at the end will all for users to send additional flags to the compiler 
+* -g flag tells the compiler to generate debugging information 
+* -O2 another optimization that the compiler needs to do with right level of logging to make builds fast. 
+* -Wall indicates that all warnings need to be shown 
+* -I specifies the source folder for teh code. 
+* -D sets a variable that can be used in a MACRO therefore NDEBUG is set for the dbg.h marco file. 
+* the $(OPTFLAGS) at the end will all for users to send additional flags to the compiler 
 
 ## LIBS
 The LIBS section in the make file allows for options at the library linking level. To add more options $(OPTFLAG) is provided.
@@ -17,17 +17,35 @@ The LIBS section in the make file allows for options at the library linking leve
 ## PREFIX 
 the PREFIX is a variable that the user needs to set if there is no PREFIX set it will default to /usr/local
 
-## SORUCES
+## SOURCES
 The sources section mentions that the c code user under the src folder with .c suffix and is at multiple levels. 
+```
+SOURCES:$(wildcard src/**/*.c src/*.c)    
+```
+this creates a list of all the files in the src folder recursively. 
 
 ## OBJECTS 
 the object uses a makefile function patsubst which takes the list of $(SOURCES) and creates a new list by replacing all words ending with .c and make a new list with .o These file names are then assigend to OBJECTS variable. 
+```
+OBJECTS=$(patsubst %.c, %.o, $(SOURCES)) 
+```
+this will take the list created in the SORUCE section above and will replace the value of .c with .o to get the object file for all c file. 
 
 ## TEST_SRC and TESTS 
 These do the same thing that SOURCES and OBJECTS do for source files but this is done for test file. 
+```
+TEST_SRC=$(wildcard tests/*_tests.c)
+TESTS=$(patsubst %.c, %, $(TEST_SRC)) 
+```
 
 ## TARGET and SO_TARGET
 the target mentions the name build/libYOUR_LIBRARY.a and we need to replace the YOUR_LIBRARY with the name you want to give.  
+
+```
+TARGET=build/libYOUR_LIBRARY.a
+SO_TRAGET=$(patsubst %.a, %.so, $(TARGET))
+```
+
 
 ## all 
 the all is the default target that is run by the make file when there is no other target specified. in our case we have give a list of files in the soruce and test folders. 
